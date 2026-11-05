@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo Bài 1: Hello Cloud API & NIST Characteristics</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f4f4f9; color: #333; }
+        h1, h2 { color: #0056b3; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #fff; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #0056b3; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        ul { background: #fff; padding: 20px 40px; border-radius: 5px; border: 1px solid #ddd; }
+        li { margin-bottom: 10px; }
+        .highlight { font-weight: bold; color: #d9534f; }
+    </style>
+</head>
+<body>
+
+    <h1>Báo cáo Bài 1: Lập trình trên máy ảo đám mây đầu tiên</h1>
+    <p><strong>Họ và tên / MSSV:</strong> Trần Anh Dũng - 2324802010182</p>
+
+    <h2>1. Bảng so sánh Môi trường Máy cá nhân và GitHub Codespace</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Tiêu chí</th>
+                <th>Máy cá nhân</th>
+                <th>Codespace</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Thời gian từ lúc bắt đầu đến khi chạy được <code>node -v</code></td>
+                <td>15 – 30 phút (tải installer và cài đặt thủ công)</td>
+                <td>~9 phút (cấp phát và khởi chạy xong hoàn toàn)</td>
+            </tr>
+            <tr>
+                <td>Số CPU, RAM (từ API)</td>
+                <td>4 vCPU, 8 GB RAM (Cấu hình máy cá nhân)</td>
+                <td>2 CPU, 7.8 GB RAM</td>
+            </tr>
+            <tr>
+                <td>Hệ điều hành</td>
+                <td>Windows 11</td>
+                <td>Linux (Linux 6.8.0-1064-azure)</td>
+            </tr>
+            <tr>
+                <td>Cách truy cập từ thiết bị khác</td>
+                <td>Dùng IP nội bộ Wi-Fi (http://192.168.x.x:3000) hoặc cài ngrok</td>
+                <td>Đổi Port 3000 sang Public và mở bằng URL domain công khai (.app.github.dev)</td>
+            </tr>
+            <tr>
+                <td>Chi phí, đo bằng gì</td>
+                <td>Mua phần cứng PC, tiền điện hàng tháng</td>
+                <td>Miễn phí (hạn mức 120 core-giờ/tháng), đo bằng Core-hours & Storage (GB-tháng)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>2. Đối chiếu 5 Đặc tính Điện toán Đám mây theo NIST</h2>
+    <ul>
+        <li><strong>1. Tự phục vụ theo yêu cầu (On-demand Self-service):**</strong> Sinh viên tự bấm nút <em>"Create codespace"</em> trên GitHub để cấp phát máy ảo đám mây trong vài phút mà không cần quản trị viên can thiệp thủ công.</li>
+        <li><strong>2. Truy cập mạng rộng (Broad Network Access):**</strong> API Node.js sau khi chạy có thể truy cập linh hoạt từ bất kỳ thiết bị nào (máy tính, điện thoại di động) qua mạng Internet thông qua đường dẫn HTTPS công khai.</li>
+        <li><strong>3. Gộp tài nguyên (Resource Pooling):**</strong> Máy ảo Codespace chạy trên hạ tầng đám mây Azure của Microsoft, chia sẻ chung kho tài nguyên phần cứng (CPU/RAM) nhưng vẫn đảm bảo tính cô lập giữa các container.</li>
+        <li><strong>4. Co giãn nhanh (Rapid Elasticity):**</strong> Có thể dễ dàng thay đổi cấu hình máy ảo (tăng/giảm số core CPU, RAM) hoặc bật/tắt máy ảo tức thì theo nhu cầu sử dụng thực tế.</li>
+        <li><strong>5. Dịch vụ đo lường được (Measured Service):**</strong> Hệ thống tự động theo dõi và báo cáo chính xác mức độ tiêu thụ tài nguyên theo thời gian (hiển thị số <em>core-hours</em> và <em>storage GB-tháng</em> trong mục Billing Usage).</li>
+    </ul>
+
+</body>
+</html>
