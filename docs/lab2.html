@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 2 - Container & CloudSim Plus | Trần Anh Dũng</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 960px; margin: 32px auto; padding: 0 16px; line-height: 1.6; color: #222; }
+    h1, h2 { color: #0f4c81; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background: #f0f4f8; }
+    code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; }
+    .box { background: #f8fafc; border-left: 4px solid #0f4c81; padding: 12px 16px; margin: 16px 0; }
+  </style>
+</head>
+<body>
+  <h1>Báo cáo Thực hành Lab 2: Containerization &amp; CloudSim Plus</h1>
+  <div class="box">
+    <strong>Sinh viên thực hiện:</strong> Trần Anh Dũng — <strong>MSSV:</strong> 2324802010182<br>
+    <strong>Image GHCR Public:</strong> <code>ghcr.io/2324802010182-lgtm/notes-api:1.0</code>
+  </div>
+
+  <h2>Phần A: Đóng gói ứng dụng với Docker &amp; GHCR</h2>
+  <p>Ứng dụng <code>notes-api</code> (Node.js 22) được đóng gói bằng multi-stage/Alpine image với dung lượng tối ưu <strong>173 MB</strong> và xuất bản công khai lên GitHub Container Registry.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Tiêu chí so sánh</th>
+        <th>Máy ảo (Virtual Machine)</th>
+        <th>Container (Docker <code>notes-api:1.0</code>)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Kích thước gói</strong></td>
+        <td>2 GB – 20 GB (chứa toàn bộ OS khách)</td>
+        <td><strong>173 MB</strong> (chỉ chứa Node.js Alpine và mã nguồn)</td>
+      </tr>
+      <tr>
+        <td><strong>Thời gian khởi động</strong></td>
+        <td>30 giây – vài phút (khởi động BIOS &amp; Kernel)</td>
+        <td><strong>&lt; 1 giây</strong> (chạy trực tiếp tiến trình trên nhân Linux host)</td>
+      </tr>
+      <tr>
+        <td><strong>Mức cô lập</strong></td>
+        <td>Cô lập phần cứng qua Hypervisor, kernel riêng</td>
+        <td>Cô lập tiến trình qua Namespaces &amp; Cgroups, dùng chung kernel</td>
+      </tr>
+      <tr>
+        <td><strong>Tài nguyên nhìn thấy</strong></td>
+        <td>Chỉ thấy vCPU và RAM ảo hóa được cấp phát</td>
+        <td>App thấy toàn bộ phần cứng host (2 CPUs, 7.8 GB RAM)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Phần B: Mô phỏng hạ tầng đám mây với CloudSim Plus 9.0.0</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Kịch bản mô phỏng</th>
+        <th>Lớp thực thi</th>
+        <th>Kết quả &amp; Nhận xét kỹ thuật</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Cơ bản (Basic)</strong></td>
+        <td><code>BasicFirstExample</code></td>
+        <td>4 Cloudlet (10.000 MI) chạy song song trên 2 VM (4 core), hoàn tất đồng loạt tại <strong>20.1s</strong> (ExecTime = 20.0s).</td>
+      </tr>
+      <tr>
+        <td><strong>2. Lập lịch Cloudlet</strong></td>
+        <td><code>TimeSharedExample1</code> vs <code>SpaceSharedExample1</code></td>
+        <td><strong>TimeShared:</strong> chạy đồng thời chia sẻ CPU nên ExecTime tăng gấp đôi (<strong>20.0s</strong>).<br><strong>SpaceShared:</strong> chạy tuần tự theo nhóm core nên ExecTime giữ nguyên <strong>10.0s</strong>/tác vụ (hoàn tất tại 20.2s).</td>
+      </tr>
+      <tr>
+        <td><strong>3. Định vị VM (BestFit)</strong></td>
+        <td><code>DynamicVmPlacementPolicyBestFitExample</code></td>
+        <td>Gom VM 0 và VM 1 (2 core) lấp đầy Host 0 (4 core) trước khi đặt VM 2 sang Host 1 (5 core), tối ưu mật độ máy chủ vật lý.</td>
+      </tr>
+      <tr>
+        <td><strong>4. Co giãn tự động</strong></td>
+        <td><code>LoadBalancerByHorizontalVmScalingExample</code></td>
+        <td>Tự động sinh thêm VM mới khi tải tăng cao và phân phối đều các Cloudlet qua bộ cân bằng tải, hoàn tất mô phỏng tại <strong>122.31s</strong>.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><a href="index.html">&larr; Quay lại trang báo cáo Lab 1</a></p>
+</body>
+</html>
